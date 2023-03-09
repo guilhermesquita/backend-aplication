@@ -1,14 +1,20 @@
 import { Request, Response } from "express"
 import { pets } from "../database/database"
+import { db } from "../database/knex"
 
-const TABLE_NAME = pets
+const TABLE_NAME = "pets"
 
 export class ptController {
     public getPets = async (req: Request, res: Response) => {
+
         try {
-            res.status(200).send(TABLE_NAME)
+
+            const result = await db('pets')
+
+            res.send(result)
+
         } catch (error) {
-            throw new error('ERRO!')
+            throw new error ('ERRO!')
         }
     }
 }
