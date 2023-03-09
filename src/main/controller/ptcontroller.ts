@@ -9,7 +9,7 @@ export class ptController {
 
         try {
 
-            const result = await db('pets')
+            const result = await db(TABLE_NAME)
 
             res.send(result)
 
