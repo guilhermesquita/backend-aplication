@@ -1,4 +1,4 @@
-export type TClient = {
+export interface IClient {
     id: string,
     name: string,
     email: string,

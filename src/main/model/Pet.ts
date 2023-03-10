@@ -1,18 +1,41 @@
-import { Entity } from "typeorm"
-import { Column } from "typeorm/decorator/columns/Column"
-import { PrimaryColumn } from "typeorm/decorator/columns/PrimaryColumn";
-
-@Entity()
 export class Pet {
-    @PrimaryColumn()
-    id: string; 
+    constructor(
+        private id: string,
+        private name: string,
+        private price: number,
+        private size: string
+    ) { }
 
-    @Column()
-    name: string;
+    public getId(){
+        return this.id
+    }
 
-    @Column()
-    price: number;
+    public setId(newId: string){
+        this.id = newId
+    }
 
-    @Column()
-    size: string;
+    public getName(){
+        return this.name
+    }
+
+    public setName(newName: string){
+        this.name = newName
+    }
+
+    public getPrice(){
+        return this.price
+    }
+
+    public setPrice(newPrice: number){
+        this.price = newPrice
+    }
+
+    public getSize(){
+        return this.size
+    }
+
+    public setSize(newSize: string){
+        this.size = newSize
+    }
+
 }

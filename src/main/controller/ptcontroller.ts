@@ -1,20 +1,35 @@
 import { Request, Response } from "express"
-import { pets } from "../database/database"
-import { db } from "../database/knex"
-
-const TABLE_NAME = "pets"
+import { ptBusiness } from "../business/ptBusiness"
 
 export class ptController {
     public getPets = async (req: Request, res: Response) => {
 
         try {
 
-            const result = await db(TABLE_NAME)
+            const getpets = new ptBusiness()
+            const result = await getpets.getPets()
 
             res.send(result)
 
         } catch (error) {
-            throw new error ('ERRO!')
+            throw new error('ERRO!')
+        }
+    }
+
+    public createPets = async (req: Request, res: Response) => {
+
+        try {
+
+            const {id, name, price, size} = req.body
+
+            const createpets = new ptBusiness()
+
+            await createpets.createPet(id, name, price, size)
+
+            res.send('Animal Cadastrado!')
+
+        } catch (error) {
+            throw new error('ERRO!')
         }
     }
 }

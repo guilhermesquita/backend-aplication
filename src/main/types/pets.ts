@@ -4,9 +4,9 @@ export enum PET_SYZE {
     LARGE = "Pequeno Porte"
 }
   
-export type Tpet = {
+export interface Ipet {
     id: string,
     name: string,
-    price: 5,
+    price: number,
     size: PET_SYZE
 }

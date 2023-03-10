@@ -1,12 +1,15 @@
 import { Request, Response } from "express"
-import { clients } from "../database/database"
+import { clientBusiness } from "../business/clientBusiness"
 
-const TABLE_NAME = clients
 
 export class clientController {
     public getClients = async (req: Request, res: Response) => {
         try {
-            res.status(200).send(TABLE_NAME)
+
+            const client = new clientBusiness()
+            const result = await client.getClients()
+
+            res.status(200).send(result)
         } catch (error) {
             throw new error('ERRO!')
         }

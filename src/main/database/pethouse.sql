@@ -10,3 +10,16 @@ INSERT INTO pets (id, name, price, size)
 VALUES('p001', 'Thor', 23, 'Pequeno Porte');
 
 SELECT * FROM pets;
+
+CREATE TABLE clients (
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    age INT NOT NULL
+);
+
+SELECT * FROM clients;
+
+INSERT INTO clients(id, name, email, password, age)
+VALUES('c001', 'Lucas', 'lucas@email.com', 'senha123', 22)
