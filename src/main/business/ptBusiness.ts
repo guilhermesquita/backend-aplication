@@ -1,15 +1,23 @@
 import { PetDatabase } from "../database/petDatabase"
 import { BadRequestError } from "../errors/BadRequestError"
 import { NotFoundError } from "../errors/NotFoundError"
+import { Pet } from "../model/Pet"
 import { Ipet, PET_SYZE } from "../types/pets"
 
 export class ptBusiness {
     public async getPets() {
 
         const getpets = new PetDatabase()
-        const result = getpets.getPets()
+        const result = await getpets.getPets()
 
-        return result
+        const pets: Pet[] = result.map((pet) => new Pet(
+            pet.id,
+            pet.name,
+            pet.price,
+            pet.size
+        ))
+
+        return pets
     }
 
     public async getPetsById(id: string) {
@@ -21,17 +29,19 @@ export class ptBusiness {
             throw new NotFoundError('Id não encontrado!')
         }
 
-        return result
+        const pets: Pet[] = result.map((pet) => new Pet(
+            pet.id,
+            pet.name,
+            pet.price,
+            pet.size
+        ))
+
+        return pets
     }
 
-    public async createPet(id: string, name: string, price: number, size: PET_SYZE) {
+    public async createPet(input: any) {
 
-        const newPet = {
-            id: id,
-            name: name,
-            price: price,
-            size: size
-        }
+        const {id, name, price, size} = input
 
         const createPet = new PetDatabase()
         const petsDbExists = await createPet.getPetsById(id)
@@ -40,16 +50,32 @@ export class ptBusiness {
             throw new BadRequestError('Id já existente!')
         }
 
-        if(typeof price !== 'string' || typeof price !== 'number' || typeof size !== 'string'){
+        if (typeof name !== 'string'  || typeof size !== 'string') {
             throw new BadRequestError('Insira número apenas no PRICE!')
         }
 
-        if (typeof price !== "number") {
-            throw new BadRequestError('cdscsd')
+    
+        const newPet = new Pet(
+            id,
+            name, 
+            price,
+            size
+        )
+
+        const newPetDB: Ipet = {
+            id: newPet.getId(),
+            name: newPet.getName(),
+            price: newPet.getPrice(),
+            size: newPet.getSize()
         }
 
-        const result = await createPet.createPets(newPet)
+        await createPet.createPets(newPetDB)
 
-        return result
+        const output = {
+            message: "Animal registrado com sucesso",
+            product: newPet
+        }
+
+        return output
     }
 }

@@ -46,13 +46,18 @@ export class ptController {
 
         try {
 
-            const {id, name, price, size} = req.body
+            const input = {
+                id: req.body.id,
+                name: req.body.name,
+                price: req.body.price,
+                size: req.body.size
+            }
 
             const createpets = new ptBusiness()
 
-            await createpets.createPet(id, name, price, size)
+            const output = await createpets.createPet(input)
 
-            res.send('Animal Cadastrado!')
+            res.send(output)
 
         } catch (error) {
             if(req.statusCode === 200){

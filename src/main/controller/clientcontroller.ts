@@ -40,12 +40,18 @@ export class clientController {
     public createClients = async (req: Request, res: Response) => {
         try {
 
-            const {id, name, email, password, age} = req.body
+            const input = {
+                id: req.body.id,
+                name: req.body.name,
+                email: req.body.email,
+                password: req.body.password,
+                age: req.body.age
+            }
 
             const client = new clientBusiness()
-            await client.creatClient(id, name, email, password, age)
+            const result = await client.createClient(input)
 
-            res.status(200).send('Usuário cadastrado com sucesso!')
+            res.status(201).send(result)
         } catch (error) {
             if (req.statusCode === 200) {
                 res.status(500)

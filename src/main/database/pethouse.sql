@@ -22,4 +22,11 @@ CREATE TABLE clients (
 SELECT * FROM clients;
 
 INSERT INTO clients(id, name, email, password, age)
-VALUES('c001', 'Lucas', 'lucas@email.com', 'senha123', 22)
+VALUES('c001', 'Lucas', 'lucas@email.com', 'senha123', 22);
+
+DELETE FROM pets 
+WHERE id = 'p007'; 
+
+
+DELETE FROM pets 
+WHERE id = 'p008'; 

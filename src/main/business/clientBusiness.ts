@@ -1,15 +1,24 @@
 import { clientDatabase } from "../database/clientDatabase"
 import { BadRequestError } from "../errors/BadRequestError"
 import { NotFoundError } from "../errors/NotFoundError"
+import { Client } from "../model/Client"
 import { IClient } from "../types/clients"
 
 export class clientBusiness {
 
     public async getClients() {
         const client = new clientDatabase()
-        const result = await client.getClients()
+        const clientDb = await client.getClients()
 
-        return result
+        const clients: Client[] = clientDb.map((clientDb) => new Client(
+            clientDb.id,
+            clientDb.name,
+            clientDb.email,
+            clientDb.password,
+            clientDb.age
+        ))
+
+        return clients;
     }
 
     public async getClientsById(id: string) {
@@ -23,19 +32,13 @@ export class clientBusiness {
         return result
     }
 
-    public async creatClient(id: string, name: string, email: string, password: string, age:number){
-        
-        const newClient = {
-            id: id,
-            name: name,
-            email: email,
-            password: password,
-            age: age
-        }
+    public async createClient(input: any) {
 
-        const client = new clientDatabase()
-        const clientIdExists = await client.getClientsById(id)
-        const clientEmailExists = await client.getClientsByEmail(email)
+        const { id, name, email, password, age } = input
+
+        const clientsDatabase = new clientDatabase()
+        const clientIdExists = await clientsDatabase.getClientsById(id)
+        const clientEmailExists = await clientsDatabase.getClientsById(email)
 
         if(clientIdExists.length > 0){
             throw new BadRequestError('ID já em uso!')
@@ -45,9 +48,33 @@ export class clientBusiness {
             throw new BadRequestError('Email já cadastrado na plataforma!')
         }
 
-        const result = await client.createClients(newClient)
+        if(age < 18){
+            throw new BadRequestError('Para se tornar cliente, sua idade deve ser no mínimo de 18 anos!')
+        }
 
-        return result
+        const newClient = new Client(
+            id,
+            name,
+            email,
+            password,
+            age
+        )
+
+        const newClientDB: IClient = {
+            id: newClient.getId(),
+            name: newClient.getName(),
+            email: newClient.getEmail(),
+            password: newClient.getPassword(),
+            age: newClient.getAge()
+        }
+
+        await clientsDatabase.createClients(newClientDB);
+
+        const output = {
+            message: "Produto registrado com sucesso",
+            product: newClient
+        }
+
+        return output
     }
-
 }

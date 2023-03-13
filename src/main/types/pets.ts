@@ -8,5 +8,5 @@ export interface Ipet {
     id: string,
     name: string,
     price: number,
-    size: PET_SYZE
+    size: string
 }

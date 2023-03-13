@@ -1,3 +1,5 @@
+import { PET_SYZE } from "../types/pets"
+
 export class Pet {
     constructor(
         private id: string,
@@ -34,7 +36,7 @@ export class Pet {
         return this.size
     }
 
-    public setSize(newSize: string){
+    public setSize(newSize: PET_SYZE){
         this.size = newSize
     }
 
