@@ -43,7 +43,7 @@ export class clientController {
             const {id, name, email, password, age} = req.body
 
             const client = new clientBusiness()
-            const result = await client.creatClient(id, name, email, password, age)
+            await client.creatClient(id, name, email, password, age)
 
             res.status(200).send('Usuário cadastrado com sucesso!')
         } catch (error) {
