@@ -16,6 +16,32 @@ export class ptController {
         }
     }
 
+    public getPetsById = async (req: Request, res: Response) => {
+
+        try {
+
+            const id = req.params.id;
+
+            const getpets = new ptBusiness()
+            const result = await getpets.getPetsById(id)
+
+            res.send(result)
+
+        } catch (error) {
+
+            if(req.statusCode === 200){
+                res.status(500)
+            }
+
+            if(error instanceof Error){
+                res.send(error.message)
+            }else{
+                res.send("Error inesperado!")
+            }
+
+        }
+    }
+
     public createPets = async (req: Request, res: Response) => {
 
         try {
@@ -29,7 +55,15 @@ export class ptController {
             res.send('Animal Cadastrado!')
 
         } catch (error) {
-            throw new error('ERRO!')
+            if(req.statusCode === 200){
+                res.status(500)
+            }
+
+            if(error instanceof Error){
+                res.send(error.message)
+            }else{
+                res.send("Error inesperado!")
+            }
         }
     }
 }

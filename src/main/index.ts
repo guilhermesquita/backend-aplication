@@ -1,5 +1,5 @@
 import express from 'express'
-import { clientRouter } from './router/clientRouter'
+//import { clientRouter } from './router/clientRouter'
 import { petRouter } from './router/petRouter'
 
 const app = express()
@@ -11,4 +11,4 @@ app.listen(3003, ()=>{
 })
 
 app.use("/pets", petRouter)
-app.use("/clients", clientRouter)
+// app.use("/clients", clientRouter)
